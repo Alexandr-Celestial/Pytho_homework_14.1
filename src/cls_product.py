@@ -32,3 +32,11 @@ class Product:
             print("Цена не должна быть нулевая или отрицательная")
         else:
             self.__price = new_price
+
+    def __str__(self) -> str:
+        """Переопределение метода str"""
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other: "Product") -> float:
+        """Переопределение метода add"""
+        return self.quantity * self.__price + other.quantity + other.price
