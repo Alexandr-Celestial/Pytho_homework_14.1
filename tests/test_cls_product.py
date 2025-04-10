@@ -1,12 +1,4 @@
-import pytest
-
 from src.cls_product import Product
-
-
-@pytest.fixture
-def fixture_product() -> Product:
-    """Фикстура для теста класса Product"""
-    return Product("mobile", "256GB, Серый цвет, 200MP камера", 180000.0, 1)
 
 
 def test_init(fixture_product: Product) -> None:
@@ -18,6 +10,7 @@ def test_init(fixture_product: Product) -> None:
 
 
 def test_price() -> None:
+    """Тест для проверки геттера price"""
     prod = Product('55" QLED 4K', "Фоновая подсветка", 123000.0, 7)
     prod.price = 125
     assert prod.price == 125

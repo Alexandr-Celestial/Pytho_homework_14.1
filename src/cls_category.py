@@ -11,11 +11,11 @@ class Category:
     category_count = 0
     product_count = 0
 
-    def __init__(self, name: str, description: str):
+    def __init__(self, name: str, description: str, products: list[Product]):
         """Инициализация экземпляров класса"""
         self.name = name
         self.description = description
-        self.__products = []
+        self.__products = products
         Category.category_count += 1
 
     def add_product(self, product: Product) -> None:
@@ -33,9 +33,11 @@ class Category:
         Category.product_count += 1
 
     @property
-    def products(self) -> str:
-        """Геттер, который выводит список товаров в виде строки"""
-        result = []
-        for product in self.__products:
-            result.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
-        return "\n".join(result)
+    def products(self) -> list[Product]:
+        """Геттер, возвращающий список товаров"""
+        return self.__products
+
+    def __str__(self) -> str:
+        """Переопределение метода str"""
+        sums_quantity = sum([prod.quantity for prod in self.__products])
+        return f"{self.name}, количество продуктов: {sums_quantity} шт"
