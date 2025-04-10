@@ -39,4 +39,4 @@ class Product:
 
     def __add__(self, other: "Product") -> float:
         """Переопределение метода add"""
-        return self.quantity * self.__price + other.quantity + other.price
+        return self.quantity * self.__price + other.quantity * other.price
