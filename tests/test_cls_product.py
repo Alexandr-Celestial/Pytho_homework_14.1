@@ -1,4 +1,7 @@
-from src.cls_product import Product
+import pytest
+
+from src.cls_category import Category
+from src.cls_product import LawnGrass, Product, Smartphone
 
 
 def test_init(fixture_product: Product) -> None:
@@ -22,3 +25,10 @@ def test_new_product() -> None:
         {"name": '55" QLED 4K', "description": "Фоновая подсветка", "price": 123000.0, "quantity": 7}
     )
     assert isinstance(test_data_dict, Product)
+
+
+def test_add_prod(fisture_smartphone: Smartphone, fixture_lawn_grass: LawnGrass, fixture_category_1: Category) -> None:
+    with pytest.raises(TypeError):
+        fisture_smartphone + fixture_lawn_grass
+    with pytest.raises(TypeError):
+        fixture_category_1.add_product("Not a product")
