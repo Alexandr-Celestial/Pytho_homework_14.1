@@ -54,7 +54,7 @@ def test_price_category(capsys: CaptureFixture[str], product_phone: Product) -> 
         product_phone.price = 14000
         category.add_product(product_phone)
         read_outr = capsys.readouterr()
-        assert read_outr.out == ""
+        assert read_outr.out == "Product (Iphone 15, 512GB, Gray space, 210000.0, 8)\n"
 
     with patch("builtins.input", lambda _: "n"):
         category.add_product(product_phone)
@@ -62,3 +62,8 @@ def test_price_category(capsys: CaptureFixture[str], product_phone: Product) -> 
         category.add_product(product_phone)
         read_outr = capsys.readouterr()
         assert read_outr.out == ""
+
+
+def test_str_(fixture_category_1) -> None:
+    """Тестирование метода __str__"""
+    assert str(fixture_category_1) == "Смартфоны, количество продуктов: 0 шт"

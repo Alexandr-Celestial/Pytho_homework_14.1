@@ -1,9 +1,29 @@
-from typing import Self
+from abc import ABC, abstractmethod
+from typing import Any
 
 
-class Product:
+class BaseProduct(ABC):
+    """Базовый абстрактный класс"""
+
+    @abstractmethod
+    def new_product(self, data_product: dict) -> "Product": ...
+
+    """Инициализация абстрактного класса"""
+
+
+class MixinLog:
+    """Класс-миксин"""
+
+    def __init__(self, name: str, description: str, price: float, quantity: int):
+        """Инициализация класса-миксин"""
+        name_cls = self.__class__.__name__
+        print(f"{name_cls} ({name}, {description}, {price}, {quantity})")
+
+
+class Product(BaseProduct, MixinLog):
     """Класс продукта"""
 
+    __slots__ = ("name", "description", "__price", "quantity")
     name: str
     description: str
     price: float
@@ -11,13 +31,14 @@ class Product:
 
     def __init__(self, name: str, description: str, price: float, quantity: int):
         """Инициализация экземпляров класса"""
+        MixinLog.__init__(self, name, description, price, quantity)
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
 
     @classmethod
-    def new_product(cls, data_product: dict) -> Self:
+    def new_product(cls, data_product: dict) -> "Product":
         """Класс-метод принимающий на вход параметры товара в словаре и возвращает созданный объект класса Product"""
         return cls(**data_product)
 
@@ -37,14 +58,16 @@ class Product:
         """Переопределение метода str"""
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self, other: "Product") -> float:
+    def __add__(self, other: Any) -> float:
         """Переопределение метода add"""
         if type(self) == type(other):
-            return self.quantity * self.__price + other.quantity * other.price
+            return float(self.quantity * self.__price + other.quantity * other.price)
         raise TypeError("Ошибка сложения")
 
 
 class Smartphone(Product):
+    """Класс Смартфоны"""
+
     def __init__(
         self,
         name: str,
@@ -62,10 +85,10 @@ class Smartphone(Product):
         self.memory = memory
         self.color = color
 
-    pass
-
 
 class LawnGrass(Product):
+    """Класс Трава газонная"""
+
     def __init__(
         self,
         name: str,
@@ -80,5 +103,3 @@ class LawnGrass(Product):
         self.country = country
         self.germination_period = germination_period
         self.color = color
-
-    pass
