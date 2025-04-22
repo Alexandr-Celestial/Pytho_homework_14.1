@@ -64,6 +64,23 @@ def test_price_category(capsys: CaptureFixture[str], product_phone: Product) -> 
         assert read_outr.out == ""
 
 
-def test_str_(fixture_category_1) -> None:
+def test_str_(fixture_category_1: Category) -> None:
     """Тестирование метода __str__"""
     assert str(fixture_category_1) == "Смартфоны, количество продуктов: 0 шт"
+
+
+def test_middle_price_empty() -> None:
+    """Тестирование метода middle_price с пустым значением"""
+    category_empty = Category("Пустая категория", "Категория без продуктов", [])
+    result = category_empty.middle_price()
+    assert result == 0.0
+
+
+def test_middle_price_valid() -> None:
+    """Тестирование метода middle_price с валидными значениями"""
+    product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+    product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+    product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
+    category1 = Category("Смартфоны", "Категория смартфонов", [product1, product2, product3])
+    result = category1.middle_price()
+    assert result == 140333.33333333334
