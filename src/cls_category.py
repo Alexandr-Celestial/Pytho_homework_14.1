@@ -42,6 +42,15 @@ class Category:
         """Геттер, возвращающий список товаров"""
         return self.__products
 
+    def middle_price(self) -> float:
+        """Метод, который подсчитывает средний ценник всех товаров"""
+        try:
+            total_price = sum(product.price for product in self.__products)
+            result = total_price / len(self.__products)
+            return result
+        except ZeroDivisionError:
+            return 0.0
+
     def __str__(self) -> str:
         """Переопределение метода str"""
         sums_quantity = sum([prod.quantity for prod in self.__products])
