@@ -44,3 +44,10 @@ def test_price_category(capsys: CaptureFixture[str], product_phone: Product) -> 
     assert read_out.out == (
         "Product (Iphone 15, 512GB, Gray space, 210000.0, 8)\n" "Цена не должна быть нулевая или отрицательная\n"
     )
+
+
+def test_product_value_error() -> None:
+    """Тестирование метода init с вызовом исключения ValueError"""
+    with pytest.raises(ValueError) as e:
+        Product("Бракованный товар", "Неверное количество", 1000.0, 0)
+    assert str(e.value) == "Товар с нулевым количеством не может быть добавлен"
